@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .counter {
+            border: 1px solid black;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .counter>* {
+            border: 1px solid black;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .buttons>* {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        .button {
+            width: 50%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: bisque;
+        }
+
+        .theInput {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            width: 50px;
+            height: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="counter">
+        <h1>Cool Counter</h1>
+
+
+        <div class="output">---</div>
+
+        <div class="buttons">
+            <div class="add button">+1</div>
+            <div class="sub button">-1</div>
+            <div class="addInput button">add</div>
+            <div class="subInput button">sub</div>
+        </div>
+        <div class="theInput">
+            <input type="text" class="userInput" placeholder="enter a number"></input>
+            <button onclick="retrieveInput()">ok</button>
+        </div>
+
+    </div>
+
+    <!-- to know the type on a value in java, we use typeof(); -->
+    <!-- ==checks value ===checks value and type(makes same type then compare) -->
+
+    <script>
+        
+        //first counter:
+        // let input = 0;
+
+        // let output = document.querySelector(".output");
+
+        // function newOutput() {
+        //     output.innerHTML = input;
+
+        // }
+
+        // function retrieveInput() {
+        //     let retrievedInput = document.querySelector(".userInput").value;
+        //     input = parseInt(retrievedInput, 10);
+        //     newOutput();
+        // }
+
+        // // newOutput();
+
+        // function opperation(amount) {
+        //     input = input + parseInt(amount);
+        //     newOutput();
+        // }
+
+        // document.querySelector(".add").addEventListener("click", function () { opperation(1) });
+        // document.querySelector(".sub").addEventListener("click", function () { opperation(-1) });
+
+
+        //counter made better
+        let retrievedInput=0;
+        let inputValue=0;
+        let outputValue=0;
+
+        let output = document.querySelector(".output");
+
+
+        function retrieveInput() {
+            retrievedInput = parseInt((document.querySelector(".userInput").value),10);
+            output.innerHTML =retrievedInput;
+            inputValue=retrievedInput;
+            outputValue=retrievedInput;
+
+        }
+
+        // newOutput();
+
+        function opperation(amount) {
+            outputValue = outputValue + parseInt(amount);
+            output.innerHTML =outputValue;
+        }
+
+
+
+        function addInputToOutput() {
+            outputValue = outputValue + inputValue;
+            output.innerHTML =outputValue;
+        }
+        function subInputFromOutput() {
+            outputValue = outputValue - inputValue;
+            output.innerHTML =outputValue;
+        }
+
+
+
+        document.querySelector(".add").addEventListener("click", function () { opperation(1) });
+        document.querySelector(".sub").addEventListener("click", function () { opperation(-1) });
+        document.querySelector(".addInput").addEventListener("click", function () { addInputToOutput() });
+        document.querySelector(".subInput").addEventListener("click", function () { subInputFromOutput() });
+
+
+
+    </script>
+
+
+</body>
+
+</html>
