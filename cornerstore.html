@@ -1,16 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css"/> -->
+    <script src="https://kit.fontawesome.com/96bf16ca2d.js" crossorigin="anonymous"></script>
     <title>Corner Store</title>
-  </head>
-  <body>
-    
-    
-  </body>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: auto;
+            font-family: 'Georgia', serif;
+        }
+
+        header,
+        main {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+
+        #carousel {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .carousel_img {
+            width: 100%;
+
+        }
+
+        .carousel_nav {
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            align-items: center;
+        }
+
+        #prevBtn {
+            left: 0;
+            top: 50%;
+            background-color: beige;
+        }
+
+        #nextBtn {
+            right: 0;
+            top: 50%;
+            background-color: beige;
+        }
+
+        .product_info {
+            position: absolute;
+            left: 20vw;
+            right: 60vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            width: 60%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header -->
+    <header>
+        <div class="flex items-center justify-center">
+            <div class="shop p-3"><a class="underline-none italic font-normal" href="#">SHOP</a></div>
+            <div class="about p-3"><a class="underline-none italic font-normal" href="#">ABOUT</a></div>
+        </div>
+        <div class="flex items-center justify-center">
+            <div><i class="fa-solid fa-bag-shopping"></i></div>
+        </div>
+        <div class="flex items-center justify-center">
+            <div class="profile p-3"><a class="underline-none italic font-normal" href="#"><i
+                        class="fa-solid fa-user"></i></a></div>
+            <div class="cart p-3"><a class="underline-none italic font-normal" href="#"><i
+                        class="fa-solid fa-cart-shopping"></i></a></div>
+        </div>
+    </header>
+
+
+    <!-- carousel -->
+    <section id="carousel">
+        <!-- scrolling carousel images and text -->
+        <script>
+            let carouselImages = ["images4/carousel1.png", "images4/carousel2.png", "images4/carousel3.png", "images4/carousel4.png"];
+            let productsInfo = [" first ", " second ", " third ", " fourth "];
+            let imageIndex = 0;
+            let productIndex = 0;
+            let currentImage = document.querySelector(".displayed_img").src;
+            let currentProduct = document.querySelector(".span");
+            currentImage = carouselImages[imageIndex];
+            currentProduct = productsInfo[productIndex];
+            function updateCarousel() {
+                document.querySelector(".displayed_img").src = carouselImages[imageIndex];
+                document.querySelector(".span").innerHTML = productsInfo[productIndex];
+            }
+            function nextSlide() {
+                imageIndex++;
+                productIndex++;
+                if (imageIndex > 3) { imageIndex = 0; }
+                if (productIndex > 3) { productIndex = 0; }
+                updateCarousel();
+            }
+            function prevSlide() {
+                imageIndex--;
+                productIndex--;
+                if (imageIndex < 0) { imageIndex = (carouselImages.length) - 1; }
+                if (productIndex < 0) { productIndex = (productsInfo.length) - 1; }
+                updateCarousel();
+            }
+
+        </script>
+
+
+        <div class="carousel_img w-full"><img class="displayed_img w-full h-auto" src="images4/carousel1.png"
+                alt="carouselimg"></div>
+
+        <nav class="carousel_nav">
+            <button id="prevBtn" onclick="prevSlide()" class="bg-white rounded-full p-3 w-12 h-12"><i
+                    class="fas fa-chevron-left"></i></button>
+            <button id="nextBtn" onclick="nextSlide()" class="bg-white rounded-full p-3 w-12 h-12"><i
+                    class="fas fa-chevron-right"></i></button>
+        </nav>
+
+        <div class="product_info">
+            <p class="product--name">This is our <span class="span">first </span>available product</p>
+            <a class="view_product italic font-normal underline" href="">view product</a>
+        </div>
+
+    </section>
+
+    <!-- main section -->
+    <main>
+        <!-- store header -->
+        <section class="store_section flex flex-col justify-center items-center">
+            <nav class="store_nav flex flex-row justify-between items-center py-5 w-full">
+
+                <div class="store_title ml-4 uppercase">store</div>
+
+                <div class="flex flex-row gap-3 mr-4">
+                    <div class="filter">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <div class="store_search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
+            </nav>
+
+            <style>
+                .hidden {
+                    display: none;
+                }
+            </style>
+
+            <div class="search_box flex justify-center items-center gap-5 block w-full h-20 hidden"
+                style="background-color: #9ec0c1;">
+                <label for="price_search">Price Limit </label> <!--to associate stucture together -->
+                <input type="number" class=" border-black border-2 rounded-md" id="price_search">
+                <label for="product_search">Product</label>
+                <input type="text" class=" border-black border-2 rounded-md" id="product_search">
+            </div>
+        </section>
+
+        <div class="photo_grid flex flex-wrap justify-around gap-30 mt-10">
+            <style>
+                .card {
+                    height: 350px;
+                    width: 300px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: start;
+                    margin-bottom: 10px;
+                    gap: 5px;
+                }
+
+
+                .card_img {
+                    height: 80%;
+                    width: 100%;
+                    overflow: hidden;
+                }
+
+                .card_img img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .card_title {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                }
+
+                .card_price p {
+                    font-weight: 700;
+                }
+
+                /* .button.clicked {
+                    background-color: rgb(194, 21, 21);
+                } */
+
+                .red {
+                    color: red;
+                }
+            </style>
+
+            <script>
+
+                //implement like red heart
+                document.addEventListener('DOMContentLoaded', function () {
+                    // This function is executed when the DOM content has been fully loaded.
+
+                    // Select all elements with the class 'button'
+                    let buttons = document.querySelectorAll('.button');
+                    // Add a click event listener to each button
+                    buttons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            // This function is executed when a button is clicked.
+
+                            // Toggle the 'text-gray-500' and 'text-red-500' classes on the heart icon
+                            const heartIcon = this.querySelector('.like-button');
+                            heartIcon.classList.toggle('text-gray-500');
+                            heartIcon.classList.toggle('text-red-500');
+                        });
+                    });
+                });
+
+            </script>
+
+            <div class="card">
+                <div class="card_img"><img src="images4/coffee.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">coffe</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$9.99</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card_img"><img src="images4/camera.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">camera</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div> <!--onclick="toggleLike(this.querySelector('.like-button'))" -->
+                </div>
+                <div class="card_price">
+                    <p>$39.99</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card_img"><img src="images4/desk.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">desk</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$19.99</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card_img"><img src="images4/printer.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">printer</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$29.99</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card_img"><img src="images4/cup.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">metallic cup</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$79.99</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card_img"><img src="images4\cookies.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">cookies and tea</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$49.99</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card_img"><img src="images4/spiner.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">spiner</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$129.99</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card_img"><img src="images4/dice.png" alt=""></div>
+                <div class="card_title">
+                    <div class="product_name">dice</div>
+                    <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button>
+                    </div>
+                </div>
+                <div class="card_price">
+                    <p>$91.99</p>
+                </div>
+            </div>
+
+            <style>
+                .hidden {
+                    display: none;
+                }
+            </style>
+
+        </div>
+
+        <script>
+            //to show or hide search bar by toggling(ie turning on and off) the class ".hidden"
+            let searchBox = document.querySelector(".search_box");
+            let searchIcon = document.querySelector(".fa-magnifying-glass");
+            searchIcon.addEventListener("click", function () { searchBox.classList.toggle("hidden") });
+
+            //taking the search input for product and price
+            let cards = document.querySelectorAll(".card");
+            let textInput = document.querySelector(".search_box input[type=text]");
+            textInput.addEventListener("input", filterStoreItems);
+
+            let priceInput = document.querySelector(".search_box input[type=number]");
+            priceInput.addEventListener('input', filterStoreItems);
+
+            function filterStoreItems() {
+                //each time the user enter a letter,we need to retrieve its value
+                let textValue = textInput.value.toLowerCase();
+                let priceValue = parseFloat(priceInput.value);
+                if (isNaN(priceValue)) { priceValue = 0; }
+                console.log(textValue,priceValue);
+                //loop over all cards
+                cards.forEach(function (element) {
+                    let cardPrice = parseFloat(element.innerText.split('$')[1]);//splits the string by removing the $ sign and taking each word as an array element
+                    // console.log(typeof cardPrice,typeof priceValue);
+                    // either add or remove class hidden
+                    //         // if card text content matches search value, remove class hidden
+                    //         // hide the ones that are not matching search
+                    //         // & show the matching ones
+                    if ((element.innerText.toLowerCase().includes(textValue)) && (priceValue == 0  || cardPrice < priceValue)) {
+                        console.log('entered block to show card', cardPrice, priceValue);
+                        element.classList.remove('hidden');
+                    }
+                    else {
+                        element.classList.add('hidden');
+                    }
+                });
+
+            }
+
+        </script>
+
+
+        <div style="padding-top: 30px; padding-bottom: 30px;"
+            class="first_about flex flex-col gap-20 justify-center items-start">
+
+            <div>
+                <h1 class="font-bold uppercase">About</h1>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim minus, voluptatem sapiente dolor error
+                    inventore repellat! Cupiditate in iusto temporibus minus fugiat quo adipisci ratione tempora iste ad
+                    ex aut vero totam beatae, delectus optio hic corrupti est laboriosam? Quisquam nisi ab error facere
+                    tempora non debitis sequi eveniet ad? Atque, velit aliquam, reprehenderit fugiat nobis ad ducimus
+                    corrupti alias natus facere, quo quibusdam quam sunt quaerat ea rem. Mollitia, repellendus eveniet
+                    laboriosam debitis sunt eum ut aliquam voluptatum dolores placeat in nisi molestiae? Deserunt ex,
+                    quibusdam corrupti saepe possimus nemo vero, dolorem ea modi porro aliquam, molestias quas id.</p>
+            </div>
+        </div>
+
+        <div class="hr_line border-2 border-gray-300 h-1 mt-10 mb-10"></div>
+
+        <footer class="flex flex-row items-center justify-center gap-40 pt-5">
+            <div style="padding-top: 30px; padding-bottom: 30px;"
+                class="second_about flex flex-col gap-10 justify-center items-start w-1/8 ">
+
+                <div>
+                    <h1 class="font-bold uppercase">About</h1>
+                </div>
+                <div>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo labore sequi commodi veritatis
+                        vitae debitis! Debitis, eaque! Quis aliquam beatae ratione consequuntur harum magnam magni autem
+                        nisi nihil! Qui, eos.</p>
+                </div>
+            </div>
+
+            <div class="social flex flex-col gap-20 justify-center items-end w-1/4">
+                <div>
+                    <h1 class="font-bold uppercase">Social</h1>
+                </div>
+                <div> <a class="underline-none italic font-normal" href="#">Add social links</a></div>
+            </div>
+        </footer>
+    </main>
+
+
+</body>
+
 </html>
