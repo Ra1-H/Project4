@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="styles.css"/> -->
+    <script src="https://kit.fontawesome.com/96bf16ca2d.js" crossorigin="anonymous"></script>
+    <title>Corner Store 2</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+
+        }
+
+        header,
+        main {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+
+        #carousel {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .carousel_img {
+            width: 100%;
+
+        }
+
+        .carousel_nav {
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            align-items: center;
+        }
+
+        #prevBtn {
+            left: 0;
+            top: 50%;
+            background-color: beige;
+        }
+
+        #nextBtn {
+            right: 0;
+            top: 50%;
+            background-color: beige;
+        }
+
+        .product_info {
+            position: absolute;
+            left: 20vw;
+            right: 60vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            width: 60%;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col w-100vw h-auto ">
+
+    <!-- header -->
+    <header>
+        <div class="flex items-center justify-center">
+            <div class="shop p-3"><a class="underline-none italic font-bold" href="#">SHOP</a></div>
+            <div class="about p-3"><a class="underline-none italic font-bold" href="#">ABOUT</a></div>
+        </div>
+        <div class="flex items-center justify-center">
+            <div><i class="fa-solid fa-bag-shopping"></i></div>
+        </div>
+        <div class="flex items-center justify-center">
+            <div class="profile p-3"><a class="underline-none italic font-normal" href="#"><i
+                        class="fa-solid fa-user"></i></a></div>
+            <div class="cart p-3"><a class="underline-none italic font-normal" href="#"><i
+                        class="fa-solid fa-cart-shopping"></i></a></div>
+        </div>
+    </header>
+
+
+    <!-- carousel -->
+    <section id="carousel">
+        <div class="carousel_img w-full"><img class="displayed_img w-full h-auto" src="images4/carousel1.png"
+                alt="carouselimg"></div>
+
+        <nav class="carousel_nav">
+            <button id="prevBtn" onclick="prevSlide()" class="bg-white rounded-full p-3 w-12 h-12"><i
+                    class="fas fa-chevron-left"></i></button>
+            <button id="nextBtn" onclick="nextSlide()" class="bg-white rounded-full p-3 w-12 h-12"><i
+                    class="fas fa-chevron-right"></i></button>
+        </nav>
+
+        <div class="product_info">
+            <p class="product--name font-bold">This is our <span class="span">first </span>available product</p>
+            <a class="view_product italic font-normal underline" href="">view product</a>
+        </div>
+
+        <!-- scrolling carousel images and text -->
+        <script>
+            let carouselImages = ["images4/carousel1.png", "images4/carousel2.png", "images4/carousel3.png", "images4/carousel4.png"];
+            let productsInfo = [" first ", " second ", " third ", " fourth "];
+            let imageIndex = 0;
+            let productIndex = 0;
+            let currentImage = document.querySelector(".displayed_img").src;
+            let currentProduct = document.querySelector(".span");
+            currentImage = carouselImages[imageIndex];
+            currentProduct = productsInfo[productIndex];
+            function updateCarousel() {
+                document.querySelector(".displayed_img").src = carouselImages[imageIndex];
+                document.querySelector(".span").innerHTML = productsInfo[productIndex];
+            }
+            function nextSlide() {
+                imageIndex++;
+                productIndex++;
+                if (imageIndex > 3) { imageIndex = 0; }
+                if (productIndex > 3) { productIndex = 0; }
+                updateCarousel();
+            }
+            function prevSlide() {
+                imageIndex--;
+                productIndex--;
+                if (imageIndex < 0) { imageIndex = (carouselImages.length) - 1; }
+                if (productIndex < 0) { productIndex = (productsInfo.length) - 1; }
+                updateCarousel();
+            }
+
+        </script>
+    </section>
+
+
+    <!-- main section -->
+    <main>
+        <!-- store header -->
+        <section class="store_section flex flex-col justify-center items-center">
+            <nav class="store_nav flex flex-row justify-between items-center py-5 w-full">
+
+                <div class="store_title ml-4 uppercase font-bold">store</div>
+
+                <div class="flex flex-row gap-4 mr-4">
+                    <div class="filter flex gap-5">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </div>
+                    <div class="store_search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="search_box flex justify-center items-center gap-5 block w-full h-20 hidden"
+                style="background-color: #9ec0c1;">
+                <label for="price_search">Price Limit </label> <!--to associate stucture together -->
+                <input type="number" class=" border-black border-2 rounded-md" id="price_search">
+                <label for="product_search">Product</label>
+                <input type="text" class=" border-black border-2 rounded-md" id="product_search">
+            </div>
+
+
+
+
+        </section>
+
+
+        <!--   //creating the cards from objects with JS -->
+        <div class="photo_grid flex flex-wrap justify-around gap-30 mt-10">
+        </div>
+
+        <script>
+            // Array of objects containing card information
+            const cardData = [
+                { name: "chair", imgSrc: "images4/chair.png", price: "9.99" },
+                { name: "camera", imgSrc: "images4/camera.png", price: "39.99" },
+                { name: "headphones", imgSrc: "images4/headphones.png", price: "19.99" },
+                { name: "makeup", imgSrc: "images4/makeup.png", price: "29.99" },
+                { name: "red shoes", imgSrc: "images4/shoe.png", price: "79.99" },
+                { name: "skin cream", imgSrc: "images4/skincare.png", price: "49.99" },
+                { name: "sunglasses", imgSrc: "images4/sunglass.png", price: "129.99" },
+                { name: "hand watch", imgSrc: "images4/watch.png", price: "91.99" }
+            ];
+
+            // Reference to the container where cards will be added
+            const cardContainer = document.querySelector(".photo_grid");
+
+            // Loop through the card data and generate HTML for each card
+            function populateGrid(array) {
+                cardContainer.innerHTML = '';
+                array.forEach(function (card) {
+                    // Append the generated HTML to the card container
+                    cardContainer.innerHTML += createCard(card);
+                });
+            }
+
+            function createCard(card) {
+                const cardHtml = `
+                <div class="card">
+                    <div class="card_img"><img src="${card.imgSrc}" alt="${card.name}"></div>
+                    <div class="card_title">
+                        <div class="product_name">${card.name}</div>
+                        <div><button class="button p-1"><i class="like-button fa-solid fa-heart text-gray-500"></i></button></div>
+                    </div>
+                    <div class="card_price">
+                        <p>$${card.price}</p>
+                    </div>
+                </div>
+            `;
+                return cardHtml;
+            }
+
+            populateGrid(cardData);
+
+
+
+
+
+            //implement like red heart
+            document.addEventListener('DOMContentLoaded', function () {
+                // This function is executed when the DOM content has been fully loaded.
+
+                // Select all elements with the class 'button'
+                let buttons = document.querySelectorAll('.button');
+                // Add a click event listener to each button
+                buttons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        // This function is executed when a button is clicked.
+
+                        // Toggle the 'text-gray-500' and 'text-red-500' classes on the heart icon
+                        const heartIcon = this.querySelector('.like-button');
+                        heartIcon.classList.toggle('text-gray-500');
+                        heartIcon.classList.toggle('text-red-500');
+                    });
+                });
+            });
+
+
+
+
+            //to show or hide search bar by toggling(ie turning on and off) the class ".hidden"
+            let searchBox = document.querySelector(".search_box");
+            let searchIcon = document.querySelector(".fa-magnifying-glass");
+            searchIcon.addEventListener("click", function () { searchBox.classList.toggle("hidden") });
+
+            let textInput = document.querySelector(".search_box input[type=text]");
+            textInput.addEventListener("input", filterSearch);
+
+            let priceInput = document.querySelector(".search_box input[type=number]");
+
+            priceInput.addEventListener("input", filterSearch);
+
+
+
+
+            function filterSearch() {
+
+                let textValue = textInput.value.toLowerCase();
+                let priceValue = parseFloat(priceInput.value);
+                if (isNaN(priceValue) || priceValue < 0) { priceValue = 0; }
+                console.log(textValue, priceValue);
+                let filteredCardData = cardData.filter(function (element) {
+                    let cardName = element.name.toLowerCase();
+                    let cardPrice = parseFloat(element.price);
+
+                    if ((cardName.includes(textValue)) && (priceValue == 0 || cardPrice < priceValue)) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+
+                populateGrid(filteredCardData);
+            }
+
+            let arrowUp = document.querySelector(".fa-arrow-up");
+            let arrowDown = document.querySelector(".fa-arrow-down");
+            arrowUp.addEventListener("click", function () {
+                sortAscending(cardData);
+            });
+
+            arrowDown.addEventListener("click", function () {
+                sortDescending(cardData);
+            });
+
+            function sortDescending(array) {
+                let sortedArray = array.sort(function (a, b) { return (parseFloat(b.price) - parseFloat(a.price)) });
+                populateGrid(sortedArray);
+
+            }
+
+            function sortAscending(array) {
+                let sortedArray = array.sort(function (a, b) { return (parseFloat(a.price) - parseFloat(b.price)) });
+                populateGrid(sortedArray);
+            }
+
+
+
+
+            //taking the search input for product and price
+            // let cards = document.querySelectorAll(".card");
+
+
+
+
+
+
+        </script>
+
+
+        <div style="padding-top: 30px; padding-bottom: 30px;"
+            class="first_about flex flex-col gap-20 justify-center items-start">
+
+            <div>
+                <h1 class="font-bold uppercase">About</h1>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim minus, voluptatem sapiente dolor error
+                    inventore repellat! Cupiditate in iusto temporibus minus fugiat quo adipisci ratione tempora iste ad
+                    ex aut vero totam beatae, delectus optio hic corrupti est laboriosam? Quisquam nisi ab error facere
+                    tempora non debitis sequi eveniet ad? Atque, velit aliquam, reprehenderit fugiat nobis ad ducimus
+                    corrupti alias natus facere, quo quibusdam quam sunt quaerat ea rem. Mollitia, repellendus eveniet
+                    laboriosam debitis sunt eum ut aliquam voluptatum dolores placeat in nisi molestiae? Deserunt ex,
+                    quibusdam corrupti saepe possimus nemo vero, dolorem ea modi porro aliquam, molestias quas id.</p>
+            </div>
+        </div>
+
+        <div class="hr_line border-2 border-gray-300 h-1 mt-10 mb-10"></div>
+
+        <footer class="flex flex-row items-center justify-center gap-40 pt-5">
+            <div style="padding-top: 30px; padding-bottom: 30px;"
+                class="second_about flex flex-col gap-10 justify-center items-start w-1/8 ">
+
+                <div>
+                    <h1 class="font-bold uppercase">About</h1>
+                </div>
+                <div>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo labore sequi commodi veritatis
+                        vitae debitis! Debitis, eaque! Quis aliquam beatae ratione consequuntur harum magnam magni autem
+                        nisi nihil! Qui, eos.</p>
+                </div>
+            </div>
+
+            <div class="social flex flex-col gap-20 justify-center items-end w-1/4">
+                <div>
+                    <h1 class="font-bold uppercase">Social</h1>
+                </div>
+                <div> <a class="underline-none italic font-normal" href="#">Add social links</a></div>
+            </div>
+        </footer>
+
+
+        <style>
+            .hidden {
+                display: none;
+            }
+
+
+            .card {
+                height: 330px;
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: start;
+                margin-bottom: 30px;
+                gap: 5px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+
+            .card_img {
+                /* height: 80%;
+                width: 100%; */
+                height: 250px;
+                width: 300px;
+                overflow: hidden;
+
+            }
+
+            .card_img img {
+                height: 100%;
+                width: 100%;
+                display: block;
+            }
+
+            .card_title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .card_price p {
+                font-weight: 700;
+            }
+
+            /* .button.clicked {
+                background-color: rgb(194, 21, 21);
+            }  */
+
+            .red {
+                color: red;
+            }
+        </style>
+
+    </main>
+
+
+</body>
+
+</html>
+<!-- 
+    we can also create the cards in the grid this way by using appendChild
+     const cardContainer = document.querySelector(".photo_grid");
+
+            function createCardElement(card) {
+                // Create a div element for the card
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card";
+
+                // Create an image element for the card
+                const cardImg = document.createElement("div");
+                cardImg.className = "card_img";
+                const img = document.createElement("img");
+                img.src = card.imgSrc;
+                img.alt = card.name;
+                cardImg.appendChild(img);
+
+                // Create a div element for the card title
+                const cardTitle = document.createElement("div");
+                cardTitle.className = "card_title";
+                const productName = document.createElement("div");
+                productName.className = "product_name";
+                productName.textContent = card.name;
+                const likeButtonContainer = document.createElement("div");
+                const likeButton = document.createElement("button");
+                likeButton.className = "button p-1";
+                const heartIcon = document.createElement("i");
+                heartIcon.className = "like-button fa-solid fa-heart text-gray-500";
+                likeButton.appendChild(heartIcon);
+                likeButtonContainer.appendChild(likeButton);
+                cardTitle.appendChild(productName);
+                cardTitle.appendChild(likeButtonContainer);
+
+                // Create a div element for the card price
+                const cardPrice = document.createElement("div");
+                cardPrice.className = "card_price";
+                const priceParagraph = document.createElement("p");
+                priceParagraph.textContent = `$${card.price.toFixed(2)}`;
+                cardPrice.appendChild(priceParagraph);
+
+                // Append elements to the card div
+                cardDiv.appendChild(cardImg);
+                cardDiv.appendChild(cardTitle);
+                cardDiv.appendChild(cardPrice);
+
+                return cardDiv;
+            }
+
+            // Iterate over the array and create card elements
+            cardData.forEach(card => {
+                // Create a card element using the createCardElement function
+                const cardElement = createCardElement(card);
+
+                // Append the card element to the card container
+                cardContainer.appendChild(cardElement);
+            });
+
+ -->
