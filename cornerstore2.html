@@ -88,21 +88,35 @@
 
     <!-- header -->
     <header>
-        <div class="flex items-center justify-center">
+        <div class="head1 flex items-center justify-center">
             <div class="shop p-3"><a class="underline-none italic font-bold" href="#">SHOP</a></div>
             <div class="about p-3"><a class="underline-none italic font-bold" href="#">ABOUT</a></div>
         </div>
         <div class="flex items-center justify-center">
             <div><i class="fa-solid fa-bag-shopping"></i></div>
         </div>
-        <div class="flex items-center justify-center">
+        <div class="head2 flex items-center justify-center">
             <div class="profile p-3"><a class="underline-none italic font-normal" href="#"><i
                         class="fa-solid fa-user"></i></a></div>
             <div class="cart p-3"><a class="underline-none italic font-normal" href="#"><i
                         class="fa-solid fa-cart-shopping"></i></a></div>
         </div>
     </header>
+    <style>
+        @media only screen and (max-width: 500px) {
+            header{
+                flex-direction: column;
+            }
+            .head1{
+                flex-direction: column;
+            }
+            .head2{
+                flex-direction: column;
+            }
 
+            
+        }
+    </style>
 
     <!-- carousel -->
     <section id="carousel">
@@ -276,7 +290,7 @@
 
 
             function filterSearch() {
-
+                
                 let textValue = textInput.value.toLowerCase();
                 let priceValue = parseFloat(priceInput.value);
                 if (isNaN(priceValue) || priceValue < 0) { priceValue = 0; }
@@ -287,13 +301,14 @@
 
                     if ((cardName.includes(textValue)) && (priceValue == 0 || cardPrice < priceValue)) {
                         return true;
+                    
                     }
                     else {
                         return false;
                     }
                 });
 
-                populateGrid(filteredCardData);
+                sortAscending(filteredCardData);
             }
 
             let arrowUp = document.querySelector(".fa-arrow-up");
